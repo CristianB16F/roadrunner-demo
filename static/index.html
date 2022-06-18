@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TransferFile</title>
+</head>
+<body>
+    <div class="Titulo">TransferFile</div>
+    <form action="" method="post" enctype="multipart/form-data" class="FormularioAjax">
+        <div id="file">
+            <p id="texto">Agregar archivo</p>
+            <input id="subir" type="file" name = "fichero" accept=".jpg, .png, .jpeg">
+        </div> 
+        <button type="submit">Enviar</button>
+
+    </form>
+    
+</body>
+<script>
+
+const formularios_ajax=document.querySelectorAll(".FormularioAjax");
+
+function enviar_formulario_ajax(e){
+    e.preventDefault();
+
+    let enviar=confirm("Quieres enviar el formulario");
+
+    if(enviar==true){
+
+        let data= new FormData(this);
+        let method=this.getAttribute("method");
+        let action=this.getAttribute("action");
+
+        let encabezados= new Headers();
+
+        let config={
+            method: method,
+            headers: encabezados,
+            mode: 'cors',
+            cache: 'no-cache',
+            body: data
+        };
+
+        fetch(action,config)
+        .then(respuesta => respuesta.text())
+        .then(respuesta =>{ 
+            alert(respuesta); 
+        });
+    }
+
+}
+
+formularios_ajax.forEach(formularios => {
+    formularios.addEventListener("submit",enviar_formulario_ajax);
+});
+</script>
+
+
+</html>
